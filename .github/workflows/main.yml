@@ -1,0 +1,49 @@
+name: Unity Build Actions
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build for ${{ matrix.targetPlatform }} on version ${{ matrix.unityVersion  }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # We don't want to stop the whole job if one of the build fails
+      # The runner will loop over each value in the matrix
+      matrix: 
+        unityVersion: 
+          - 2020.3.26f1
+        targetPlatform: 
+          - StandaloneWindows
+          - StandaloneLinux64
+          - WebGL
+    steps:
+      # Checkout a copy of the repository onto the virtual machine
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache library for reuse between builds
+      - name: Cache Library
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlaform }}
+          buildName: ${{ matrix.targetPlatform }}
+
+      # Output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+
