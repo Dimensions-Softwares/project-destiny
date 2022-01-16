@@ -4,7 +4,7 @@ on:
         workflows: [Unity Build Actions]
         types:
             -completed
-    [workflow_dispatch]
+    workflow_dispatch:
 jobs:
   Success Notification:
     name: Notification for new build
@@ -34,6 +34,3 @@ jobs:
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
           args: ':x: Le build a échoué :( Plus d'informations sur https://github.com/Dimensions-Softwares/project-destiny/actions'
-
-
-
