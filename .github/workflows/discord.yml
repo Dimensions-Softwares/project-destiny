@@ -7,7 +7,7 @@ on:
 env:
     WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     USERNAME: 'Github Integration'
-    AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png'
+    AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png '
 jobs:
   on-success:
     name: Success Case
