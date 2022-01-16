@@ -55,7 +55,6 @@ jobs:
         with:
           name: build-WebGL
           path: build
-          branch: main
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
