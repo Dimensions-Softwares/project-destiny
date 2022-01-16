@@ -4,6 +4,7 @@ on:
         workflows: [Unity Build Actions]
         types:
             -completed
+    [workflow_dispatch]
 jobs:
   Success Notification:
     name: Notification for new build
