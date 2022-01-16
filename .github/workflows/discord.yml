@@ -1,6 +1,5 @@
 name: Notify Discord Server
-on:
-  workflow_dispatch: {}
+on: [workflow_dispatch]
 jobs:
   notification:
     name: Notification for new build
