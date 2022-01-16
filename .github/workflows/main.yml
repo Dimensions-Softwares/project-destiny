@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          branch: main
           
       # Cache
       - name: Cache Library
@@ -24,6 +25,7 @@ jobs:
           path: Library
           key: Library-WebGL
           restore-keys: Library-
+          branch: main
           
       # Build
       - name: Build project
@@ -35,12 +37,14 @@ jobs:
           targetPlatform: WebGL
           buildName: WebGL
           buildsPath: build
+          branch: main
 
       # Output
       - uses: actions/upload-artifact@v2
         with:
           name: build-WebGL
           path: build/WebGL
+          branch: main
 
   build:
     name: Build for ${{ matrix.targetPlatform }} on version ${{ matrix.unityVersion  }}
@@ -60,6 +64,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          branch: main
 
       # Cache library for reuse between builds
       - name: Cache Library
@@ -68,6 +73,7 @@ jobs:
           path: Library
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
+          branch: main
 
       # Build
       - name: Build project
@@ -79,12 +85,14 @@ jobs:
           targetPlatform: ${{ matrix.targetPlaform }}
           buildName: ${{ matrix.targetPlatform }}
           buildsPath: build
+          branch: main
 
       # Output
       - uses: actions/upload-artifact@v2
         with:
           name: build-${{ matrix.targetPlatform }}
           path: build
+          branch: main
   
   # Deploy WebGL to GitHub pages
   deployPages:
@@ -99,6 +107,7 @@ jobs:
         with:
           name: build-WebGL
           path: build
+          branch: main
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
