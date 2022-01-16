@@ -9,6 +9,7 @@ env:
     USERNAME: 'Github Integration'
     AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png '
     BUILD_NAME: ${{ github.event.workflow.name }}
+    BUILD_URL: ${{ github.event.workflow_run.url }}
 jobs:
   on-success:
     name: Success Case
@@ -22,7 +23,7 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':white_check_mark: Le build du workflow **${{ env.BUILD_NAME }}** a réussi ! Plus d''informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+            args: ':white_check_mark: Le build du workflow **${{ env.BUILD_NAME }}** a réussi ! Plus d''informations sur ${{ env.BUILD_NAME }} '
           
           
   on-failure:
@@ -37,7 +38,7 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':x: Le build du workflow **${{ env.BUILD_NAME }}** a échoué :( Plus d''informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+            args: ':x: Le build du workflow **${{ env.BUILD_NAME }}** a échoué :( Plus d''informations sur ${{ env.BUILD_NAME }} '
     
   on-dispatch:
     name: Manual Case
