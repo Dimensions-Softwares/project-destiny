@@ -1,7 +1,7 @@
 name: Notify Discord Server
 on:
     workflow_run:
-        workflows: [Build Windows,Build Linux,Build WebGL, Test Workflow]
+        workflows: [Build Windows,Build Linux,Build WebGL,Test Workflow]
         types: [completed]
     workflow_dispatch:
 env:
@@ -21,7 +21,7 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':white_check_mark: Le build du workflow ${{ github.workflow.name }} a réussi ! Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+            args: ':white_check_mark: Le build du workflow ${{ github.event.workflow.name }} a réussi ! Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
           
           
   on-failure:
