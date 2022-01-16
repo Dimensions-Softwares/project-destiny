@@ -2,8 +2,7 @@ name: Notify Discord Server
 on:
     workflow_run:
         workflows: [Unity Build Actions]
-        types:
-            -completed
+        types: [completed]
     workflow_dispatch:
 jobs:
   on-success:
