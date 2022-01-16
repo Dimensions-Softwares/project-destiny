@@ -1,0 +1,44 @@
+name: Build Linux
+
+on: workflow_dispatch
+
+jobs:
+  buildWindows:
+    name: Build for Linux
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      # Checkout
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - name: Cache Library
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-StandaloneLinux64
+          restore-keys: Library-
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: 2020.3.26f1
+          targetPlatform: StandaloneLinux64
+          buildName: StandaloneLinux64
+          buildsPath: build
+
+      # Output
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-StandaloneLinux64
+          path: build/StandaloneLinux64
+
