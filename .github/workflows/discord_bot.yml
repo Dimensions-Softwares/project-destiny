@@ -52,4 +52,4 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':wrench: Ceci est un **test**. Si vous voyez ce message c''est que globalement ça marche.'
+            args: ':wrench: Ceci est un **test**. Si vous voyez ce message c''est que le workflow arrive à s''éxécuter.'
