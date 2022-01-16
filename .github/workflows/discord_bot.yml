@@ -23,7 +23,7 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':white_check_mark: Le build du workflow **${{ env.BUILD_NAME }}** a réussi ! Plus d''informations sur ${{ env.BUILD_NAME }} '
+            args: ':white_check_mark: Le build du workflow **${{ env.BUILD_NAME }}** a réussi ! Plus d''informations sur ${{ env.BUILD_URL }} '
           
           
   on-failure:
@@ -38,7 +38,7 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':x: Le build du workflow **${{ env.BUILD_NAME }}** a échoué :( Plus d''informations sur ${{ env.BUILD_NAME }} '
+            args: ':x: Le build du workflow **${{ env.BUILD_NAME }}** a échoué :( Plus d''informations sur ${{ env.BUILD_URL }} '
     
   on-dispatch:
     name: Manual Case
