@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | project-destiny</title>
+    <title>Unity WebGL Player | Chasing planes</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -20,7 +20,7 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">project-destiny</div>
+        <div id="unity-build-title">Chasing planes</div>
       </div>
     </div>
     <script>
@@ -56,15 +56,16 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/WebGL.loader.js";
+      var loaderUrl = buildUrl + "/WebGL.asm.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WebGL.data.gz",
-        frameworkUrl: buildUrl + "/WebGL.framework.js.gz",
-        codeUrl: buildUrl + "/WebGL.wasm.gz",
+        dataUrl: buildUrl + "/WebGL.data",
+        frameworkUrl: buildUrl + "/WebGL.asm.framework.js",
+        codeUrl: buildUrl + "/WebGL.asm.js",
+        memoryUrl: buildUrl + "/WebGL.asm.mem",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "project-destiny",
-        productVersion: "0.0.43",
+        productName: "Chasing planes",
+        productVersion: "0.0.61",
         showBanner: unityShowBanner,
       };
 
