@@ -6,8 +6,8 @@ on:
             -completed
     workflow_dispatch:
 jobs:
-  Success Notification:
-    name: Notification for new build
+  on-success:
+    name: Success Case
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -21,8 +21,8 @@ jobs:
             args: ':white_check_mark: Le build a réussi ! Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
           
           
-  Failure Notification:
-    name: Notification for new build
+  on-failure:
+    name: Failure Case
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
