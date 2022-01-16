@@ -4,6 +4,10 @@ on:
         workflows: [Build Windows,Build Linux,Build WebGL]
         types: [completed]
     workflow_dispatch:
+env:
+    WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+    USERNAME: 'Github Integration'
+    AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png'
 jobs:
   on-success:
     name: Success Case
@@ -12,9 +16,9 @@ jobs:
     steps:
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: 'Github Integration'
-          DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
+          DISCORD_WEBHOOK: ${{ env.WEBHOOK }}
+          DISCORD_USERNAME: ${{ env.USERNAME }}
+          DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
             args: ':white_check_mark: Le build du workflow `${{ github.event_name }}` a réussi ! Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
@@ -27,9 +31,9 @@ jobs:
     steps:
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: 'Github Integration'
-          DISCORD_AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png'
+          DISCORD_WEBHOOK: ${{ env.WEBHOOK }}
+          DISCORD_USERNAME: ${{ env.USERNAME }}
+          DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
             args: ':x: Le build du workflow `${{ github.event_name }}` a échoué :( Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
@@ -41,9 +45,9 @@ jobs:
     steps:
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          DISCORD_USERNAME: 'Github Integration'
-          DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
+          DISCORD_WEBHOOK: ${{ env.WEBHOOK }}
+          DISCORD_USERNAME: ${{ env.USERNAME }}
+          DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
             args: ':wrench: Ceci est un test. Si vous voyez ce message c''est que globalement ça marche.'
