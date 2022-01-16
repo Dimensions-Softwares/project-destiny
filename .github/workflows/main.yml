@@ -41,6 +41,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlaform }}
           buildName: ${{ matrix.targetPlatform }}
           buildsPath: ./build
+          customParameters: -nographics
 
       # Output
       - uses: actions/upload-artifact@v2
