@@ -51,4 +51,4 @@ jobs:
           DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':wrench: Ceci est un test. Si vous voyez ce message c'est que globalement ça marche.'
+            args: ':wrench: Ceci est un test. Si vous voyez ce message c''est que globalement ça marche.'
