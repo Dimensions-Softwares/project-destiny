@@ -8,6 +8,7 @@ env:
     WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     USERNAME: 'Github Integration'
     AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png '
+    BUILD_NAME: ${{ github.event.workflow.name }}
 jobs:
   on-success:
     name: Success Case
@@ -21,7 +22,7 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':white_check_mark: Le build du workflow ${{ github.event.workflow.name }} a réussi ! Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+            args: ':white_check_mark: Le build du workflow **${{ env.BUILD_NAME }}** a réussi ! Plus d''informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
           
           
   on-failure:
@@ -36,7 +37,7 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':x: Le build du workflow ${{ github.event.workflow_run.workflow.name }} a échoué :( Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+            args: ':x: Le build du workflow **${{ env.BUILD_NAME }}** a échoué :( Plus d''informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
     
   on-dispatch:
     name: Manual Case
@@ -50,4 +51,4 @@ jobs:
           DISCORD_AVATAR: ${{ env.AVATAR }}
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':wrench: Ceci est un test. Si vous voyez ce message c''est que globalement ça marche.'
+            args: ':wrench: Ceci est un **test**. Si vous voyez ce message c''est que globalement ça marche.'
