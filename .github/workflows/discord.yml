@@ -1,9 +1,14 @@
 name: Notify Discord Server
 on:
     workflow_run:
-        workflows: [Unity Build Actions]
+        workflows: [Build Windows,Build Linux,Build WebGL]
         types: [completed]
     workflow_dispatch:
+        inputs:
+            name:
+                description: 'Reason of the Manual Activation'
+                required: true
+                default: 'Manual'
 jobs:
   on-success:
     name: Success Case
@@ -17,7 +22,7 @@ jobs:
           DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':white_check_mark: Le build a réussi ! Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+            args: ':white_check_mark: Le build du workflow `${{ github.event_name }}` a réussi ! Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
           
           
   on-failure:
@@ -32,4 +37,18 @@ jobs:
           DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-            args: ':x: Le build a échoué :( Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+            args: ':x: Le build du workflow `${{ github.event_name }}` a échoué :( Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
+    
+  on-dispatch:
+    name: Manual Case
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_dispatch.name == 'Manual' }}
+    steps:
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: 'Github Integration'
+          DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
+        uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
+        with:
+            args: ':wrench: Ceci est un test | Si vous voyez ce message c'est que globalement ça marche'
