@@ -42,7 +42,7 @@ jobs:
   on-dispatch:
     name: Manual Case
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_dispatch.name == 'Manual' }}
+    if: ${{ github.event.workflow_run == null }}
     steps:
       - name: Discord notification
         env:
