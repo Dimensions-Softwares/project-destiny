@@ -34,7 +34,7 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_USERNAME: 'Github Integration'
-          DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
+          DISCORD_AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png'
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
             args: ':x: Le build du workflow `${{ github.event_name }}` a échoué :( Plus d`informations sur https://github.com/Dimensions-Softwares/project-destiny/actions '
