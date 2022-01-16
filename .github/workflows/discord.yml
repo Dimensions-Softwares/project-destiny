@@ -4,11 +4,6 @@ on:
         workflows: [Build Windows,Build Linux,Build WebGL]
         types: [completed]
     workflow_dispatch:
-        inputs:
-            name:
-                description: 'Reason of the Manual Activation'
-                required: true
-                default: 'Manual'
 jobs:
   on-success:
     name: Success Case
