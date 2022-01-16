@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CameraBehaviour : MonoBehaviour {
 
-	public Transform target
+	public Transform target;
 	public GameObject canvas;
 	public GameObject missilePrefab;
 	public GameObject[] cloudPrefab;
