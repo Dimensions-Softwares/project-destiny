@@ -40,12 +40,12 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlaform }}
           buildName: ${{ matrix.targetPlatform }}
-          buildsPath: ./build
+          buildsPath: build
           customParameters: -nographics
 
       # Output
       - uses: actions/upload-artifact@v2
         with:
           name: build-${{ matrix.targetPlatform }}
-          path: ./build/${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
 
