@@ -9,7 +9,7 @@ env:
     USERNAME: 'Github Integration'
     AVATAR: 'https://pngimg.com/uploads/github/github_PNG40.png '
     BUILD_NAME: ${{ github.event.workflow.name }}
-    BUILD_URL: ${{ github.event.workflow_run.url }}
+    BUILD_URL: ${{ github.event.workflow_job.html_url }}
 jobs:
   on-success:
     name: Success Case
