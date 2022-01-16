@@ -1,18 +1,38 @@
 name: Notify Discord Server
-on: [workflow_dispatch]
+on:
+    workflow_run:
+        workflows: [Unity Build Actions]
+        types:
+            -completed
 jobs:
-  notification:
+  Success Notification:
     name: Notification for new build
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           DISCORD_USERNAME: 'Github Integration'
+          DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
         uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
         with:
-          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'
-    
+          args: ':white_check_mark: Le build a réussi ! Plus d'informations sur https://github.com/Dimensions-Softwares/project-destiny/actions'
+          
+          
+  Failure Notification:
+    name: Notification for new build
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: 'Github Integration'
+          DISCORD_AVATAR: 'https://logos-download.com/wp-content/uploads/2016/09/GitHub_logo.png'
+        uses: Ilshidur/action-discord@08d9328877d6954120eef2b07abbc79249bb6210
+        with:
+          args: ':x: Le build a échoué :( Plus d'informations sur https://github.com/Dimensions-Softwares/project-destiny/actions'
 
 
 
