@@ -1,5 +1,4 @@
 name: Create Release
-
 on: 
     workflow_dispatch:
     pull_request:
@@ -7,20 +6,19 @@ on:
             -closed
         branches:
             - 'main'
-
-jobs: #On fait les builds directement depuis ce workflow
+jobs:
   buildWindows:
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_windows@v1
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_windows.yml@v1
     
   buildMac:
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_osx@v1
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_osx.yml@v1
     
   buildLinux:
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_linux@v1
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_linux.yml@v1
     
   buildWebGL:
     if: ${{ github.event.label.name == 'release' }}
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl@v1
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl.yml@v1
   
   getTag: #Pour avoir le numéro de la version
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
@@ -47,7 +45,6 @@ jobs: #On fait les builds directement depuis ce workflow
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-            
             artifacts: 'StandaloneWindows/*,StandaloneOSX/*,StandaloneLinux64/*'
             bodyFile: 'CHANGELOG.md'
             token: ${{ secrets.GITHUB_TOKEN }}
