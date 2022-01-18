@@ -1,0 +1,54 @@
+name: Create Release
+
+on: 
+    workflow_dispatch:
+    pull_request:
+        types:
+            -closed
+        branches:
+            - 'main'
+
+jobs: #On fait les builds directement depuis ce workflow
+  buildWindows:
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_windows@v1
+    
+  buildMac:
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_osx@v1
+    
+  buildLinux:
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_linux@v1
+    
+  buildWebGL:
+    if: ${{ github.event.label.name == 'release' }}
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl@v1
+  
+  getTag: #Pour avoir le numéro de la version
+    if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
+    steps:
+      - uses: actions/checkout@v2.2.0
+        with:
+          fetch-depth: 0
+      - name: 'Get Previous tag'
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0
+  createRelease:
+    if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
+    steps:
+      - name: Checkout code #Pour avoir le changelog
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          
+      - name: Get Builds Artifacts #On DL tous les builds
+        uses: actions/download-artifact@v2.1.0
+        
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+            
+            artifacts: 'StandaloneWindows/*,StandaloneOSX/*,StandaloneLinux64/*'
+            bodyFile: 'CHANGELOG.md'
+            token: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ jobs.getTag.steps.previoustag.outputs.tag }}

@@ -1,6 +1,8 @@
 name: Build Windows
 
-on: workflow_dispatch
+on: 
+    workflow_dispatch:
+    workflow_call:
 
 jobs:
   buildWindows:
@@ -37,7 +39,8 @@ jobs:
           buildsPath: build
 
       # Output
-      - uses: actions/upload-artifact@v2
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
         with:
-          name: build-StandaloneWindows
+          name: StandaloneWindows
           path: build/StandaloneWindows
