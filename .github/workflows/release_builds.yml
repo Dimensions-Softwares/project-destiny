@@ -8,17 +8,17 @@ on:
             - 'main'
 jobs:
   buildWindows:
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_windows.yml@main
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_windows.yml@v1
     
   buildMac:
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_osx.yml@main
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_osx.yml@v1
     
   buildLinux:
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_linux.yml@main
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_linux.yml@v1
     
   buildWebGL:
     if: ${{ github.event.label.name == 'release' }}
-    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl.yml@main
+    uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl.yml@v1
   
   getTag: #Pour avoir le numéro de la version
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
