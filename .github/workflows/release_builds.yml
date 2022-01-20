@@ -1,3 +1,9 @@
+#Le but de ce workflow est de : 
+#-Se déclencher quand une pull request est merged vers la branche "main"
+#-Lancer les builds auto sur toutes les plateformes
+#-Aller chercher le nom du dernier tag sur l'historique de git (chercher ''git tag'' sur google au cas)
+#-Créer une release sur Github avec dessus: le tag, le changelog.md et les artifacts générés par les builds
+
 name: Create Release
 on: 
     workflow_dispatch:
@@ -7,6 +13,7 @@ on:
         branches:
             - 'main'
 jobs:
+  #Phase de build
   buildWindows:
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_windows.yml@1
     
@@ -20,7 +27,7 @@ jobs:
     if: ${{ github.event.label.name == 'release' }}
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl.yml@1
   
-  getTag: #Pour avoir le numéro de la version
+  getTag: #On va chercher le dernier tag (qui normalement doit être celui de la release) Pour avoir le numéro de la version
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
     steps:
       - uses: actions/checkout@v2.2.0
@@ -31,18 +38,19 @@ jobs:
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
         with:
           fallback: 1.0.0
+  #Enfin on créé la release sur github
   createRelease:
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
     steps:
-      - name: Checkout code #Pour avoir le changelog
+      - name: Checkout code #Pour avoir le changelog (y'en a pas pour l'instant mais normalement il devrait être présent à chaque merge de release)
         uses: actions/checkout@v2
         with:
           lfs: true
           
-      - name: Get Builds Artifacts #On DL tous les builds
+      - name: Get Builds Artifacts #On DL tous les artifacts générés par les builds qui ont été call juste avant
         uses: actions/download-artifact@v2.1.0
         
-      - name: Create Release
+      - name: Create Release #On upload le tout sur github
         uses: ncipollo/release-action@v1
         with:
             artifacts: 'StandaloneWindows/*,StandaloneOSX/*,StandaloneLinux64/*'
