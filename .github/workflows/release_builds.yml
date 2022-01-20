@@ -27,18 +27,6 @@ jobs:
     if: ${{ github.event.label.name == 'release' }}
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl.yml@feature/DSTNY-21
   
-  getTag: #On va chercher le dernier tag (qui normalement doit être celui de la release) Pour avoir le numéro de la version
-    if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.2.0
-        with:
-          fetch-depth: 0
-      - name: 'Get Previous tag'
-        id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-        with:
-          fallback: 1.0.0
   #Enfin on créé la release sur github
   createRelease:
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
@@ -52,10 +40,17 @@ jobs:
       - name: Get Builds Artifacts #On DL tous les artifacts générés par les builds qui ont été call juste avant
         uses: actions/download-artifact@v2.1.0
         
+      - name: Get Previous Tag #On va chercher le dernier tag (qui normalement doit être celui de la release) Pour avoir le numéro de la version
+        id: previoustag
+        if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0
+        
       - name: Create Release #On upload le tout sur github
         uses: ncipollo/release-action@v1
         with:
             artifacts: 'StandaloneWindows/*,StandaloneOSX/*,StandaloneLinux64/*'
             bodyFile: 'CHANGELOG.md'
             token: ${{ secrets.GITHUB_TOKEN }}
-            tag: ${{ jobs.getTag.steps.previoustag.outputs.tag }}
+            tag: ${{ steps.previoustag.outputs.tag }}
