@@ -29,6 +29,7 @@ jobs:
   
   getTag: #On va chercher le dernier tag (qui normalement doit être celui de la release) Pour avoir le numéro de la version
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.2.0
         with:
@@ -41,6 +42,7 @@ jobs:
   #Enfin on créé la release sur github
   createRelease:
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code #Pour avoir le changelog (y'en a pas pour l'instant mais normalement il devrait être présent à chaque merge de release)
         uses: actions/checkout@v2
