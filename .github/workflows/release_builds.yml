@@ -30,6 +30,7 @@ jobs:
   #Enfin on créé la release sur github
   createRelease:
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
+    needs: [buildWindows, buildMac, buildLinux]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code #Pour avoir le changelog (y'en a pas pour l'instant mais normalement il devrait être présent à chaque merge de release)
