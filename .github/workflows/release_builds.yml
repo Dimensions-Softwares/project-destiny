@@ -16,6 +16,8 @@ jobs:
   #Phase de build
   buildWindows:
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_windows.yml@feature/DSTNY-21
+    secrets:
+        license: ${{ secrets.UNITY_LICENSE }}
     
   buildMac:
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_osx.yml@feature/DSTNY-21
