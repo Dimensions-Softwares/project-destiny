@@ -21,14 +21,20 @@ jobs:
     
   buildMac:
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_osx.yml@feature/DSTNY-21
-    
+    secrets:
+        license: ${{ secrets.UNITY_LICENSE }}
+        
   buildLinux:
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_linux.yml@feature/DSTNY-21
-    
+    secrets:
+        license: ${{ secrets.UNITY_LICENSE }}
+        
   buildWebGL:
     if: ${{ github.event.label.name == 'release' }}
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl.yml@feature/DSTNY-21
-  
+    secrets:
+        license: ${{ secrets.UNITY_LICENSE }}
+        
   #Enfin on créé la release sur github
   createRelease:
     if: ${{ github.event.label.name == 'release' ||  github.event.label == null}}
