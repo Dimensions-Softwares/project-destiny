@@ -30,7 +30,7 @@ jobs:
         license: ${{ secrets.UNITY_LICENSE }}
         
   buildWebGL:
-    if: ${{ github.event.label.name == 'release' }}
+    if: ${{ github.event.label.name == 'Release' }}
     uses: Dimensions-Softwares/project-destiny/.github/workflows/build_webgl.yml@feature/DSTNY-21
     secrets:
         license: ${{ secrets.UNITY_LICENSE }}
