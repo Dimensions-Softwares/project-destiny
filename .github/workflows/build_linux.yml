@@ -1,6 +1,11 @@
 name: Build Linux
 
-on: workflow_dispatch
+on:
+    workflow_dispatch:
+    workflow_call:
+        secrets:
+            license:
+                required: true
 
 jobs:
   buildWindows:
@@ -29,7 +34,7 @@ jobs:
       - name: Build project
         uses: game-ci/unity-builder@v2
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_LICENSE: ${{ secrets.license }}
         with:
           unityVersion: 2020.3.26f1
           targetPlatform: StandaloneLinux64
@@ -39,6 +44,6 @@ jobs:
       # Output
       - uses: actions/upload-artifact@v2
         with:
-          name: build-StandaloneLinux64
+          name: StandaloneLinux64
           path: build/StandaloneLinux64
 

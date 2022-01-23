@@ -1,6 +1,11 @@
 name: Build Windows
 
-on: workflow_dispatch
+on: 
+    workflow_dispatch:
+    workflow_call:
+        secrets:
+            license:
+                required: true
 
 jobs:
   buildWindows:
@@ -29,7 +34,7 @@ jobs:
       - name: Build project
         uses: game-ci/unity-builder@v2
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_LICENSE: ${{ secrets.license }}
         with:
           unityVersion: 2020.3.26f1
           targetPlatform: StandaloneWindows
@@ -37,7 +42,8 @@ jobs:
           buildsPath: build
 
       # Output
-      - uses: actions/upload-artifact@v2
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
         with:
-          name: build-StandaloneWindows
+          name: StandaloneWindows
           path: build/StandaloneWindows
