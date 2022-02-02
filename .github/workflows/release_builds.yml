@@ -43,6 +43,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          fetch-depth: 0
           
       - name: Get Builds Artifacts #On DL tous les artifacts générés par les builds qui ont été call juste avant
         uses: actions/download-artifact@v2.1.0
