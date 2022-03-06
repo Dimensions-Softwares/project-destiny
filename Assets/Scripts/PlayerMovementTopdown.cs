@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PlayerMovementTopdown : MonoBehaviour
 {
+    //Sensibility above which we consider the player is moving
+    private float sensibility = Common.MOVEMENT_SENSIBLITY;
 
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Animator animator;
+    //Player's Components we need
+    private Rigidbody2D rb;
+    private Animator animator;
 
+    //The player speed, can be modified in Unity
+    [SerializeField] private float moveSpeed;
 
-    [SerializeField] private float moveSpeed = 5f;
     private Vector2 movement;
+
+    private bool isDashing;
 
     // Start is called before the first frame update
     private void Start()
@@ -18,6 +24,7 @@ public class PlayerMovementTopdown : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         movement = Vector2.zero;
+
     }
 
     private void Update()
@@ -25,13 +32,35 @@ public class PlayerMovementTopdown : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
+        UpdateAnimatorParameters();
+    }
+
+    private void FixedUpdate()
+    {
+        if(!isDashing)
+        {
+            //Actual Movement application
+            ApplyMovement();
+        }
+    }
+
+
+
+    private void ApplyMovement()
+    {
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    private void UpdateAnimatorParameters()
+    {
         animator.SetFloat("horizontal", movement.x);
         animator.SetFloat("vertical", movement.y);
         animator.SetFloat("speed", movement.sqrMagnitude);
     }
 
-    private void FixedUpdate()
+    public void UpdateDash(bool newValue)
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        isDashing = newValue;
     }
+
 }
