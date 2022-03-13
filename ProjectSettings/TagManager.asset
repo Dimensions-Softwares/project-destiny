@@ -6,6 +6,7 @@ TagManager:
   tags:
   - plane
   - missile
+  - Platform
   layers:
   - Default
   - TransparentFX
