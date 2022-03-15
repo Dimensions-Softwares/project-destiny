@@ -7,9 +7,7 @@ using UnityEngine;
 public class DashMoveTopdown : MonoBehaviour
 {
     private float sensibility = Common.MOVEMENT_SENSIBLITY;
-
-    private enum Direction { None = 0, Right = 1, Left = 2, Up = 3, Down = 4 }
-
+    private string dashButton = "Fire2";
     
     private Rigidbody2D rb;
     private PlayerMovementTopdown moveScript;
@@ -20,17 +18,16 @@ public class DashMoveTopdown : MonoBehaviour
     private float startDashTime = 1f;
     
     private float dashTime;
-    private Direction dir;
-    private Vector2 dashMovement;
+    private Vector2 movementDir;
 
 
-    private bool isDashing;
+    private bool dashing;
     public bool IsDashing
     {
-        get => isDashing;
+        get => dashing;
         private set
         {
-            isDashing = value;
+            dashing = value;
             moveScript.UpdateDash(value);
         }
     }
@@ -38,75 +35,52 @@ public class DashMoveTopdown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dir = 0;
+        //Components Initialization
         rb = GetComponent<Rigidbody2D>();
         moveScript = GetComponent<PlayerMovementTopdown>();
+
+        //Attributes Initialization
+        movementDir = Vector2.zero;
         dashTime = startDashTime;
-        isDashing = false;
-        dashMovement = Vector2.zero;
+        IsDashing = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(dir == 0)
+        Debug.LogWarning(rb.velocity);
+        if (IsDashing)
         {
-            if (Input.GetAxisRaw("Horizontal") > sensibility)
+            dashTime -= Time.deltaTime;
+
+            if (dashTime <= 0)
             {
-                dir = Direction.Right;
-            }
-            else if (Input.GetAxisRaw("Horizontal") < -sensibility)
-            {
-                dir = Direction.Left;
-            }
-            else if (Input.GetAxisRaw("Vertical") > sensibility)
-            {
-                dir = Direction.Up;
-            }
-            else if (Input.GetAxisRaw("Vertical") < -sensibility)
-            {
-                dir = Direction.Down;
-            }
-        } else
-        {
-            if(dashTime <= 0)
-            {
-                dir = 0;
+                movementDir = Vector2.zero;
                 dashTime = startDashTime;
                 IsDashing = false;
-                dashMovement = Vector2.zero;
-            }else
+            }
+        }
+        else
+        {
+            if (Input.GetButtonDown(dashButton))
             {
-                if (!isDashing)
+                IsDashing = true;
+                
+                if(moveScript.Movement.magnitude >= sensibility)
                 {
-                    IsDashing = true;
+                    movementDir = moveScript.Movement * dashSpeed;
                 }
-
-                dashTime -= Time.deltaTime;
-
-                switch(dir)
+                else
                 {
-                    case Direction.Right:
-                        dashMovement = Vector2.right * dashSpeed;
-                        break;
-                    case Direction.Left:
-                        dashMovement = Vector2.left * dashSpeed;
-                        break;
-                    case Direction.Up:
-                        dashMovement = Vector2.up * dashSpeed;
-                        break;
-                    case Direction.Down:
-                        dashMovement = Vector2.down * dashSpeed;
-                        break;
+                    movementDir = Common.defaultDashDirection * dashSpeed;
                 }
             }
-
         }
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = dashMovement;
+        rb.velocity = movementDir;
     }
 }
