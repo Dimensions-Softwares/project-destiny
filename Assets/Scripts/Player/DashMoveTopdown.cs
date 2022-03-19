@@ -49,7 +49,6 @@ public class DashMoveTopdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogWarning(rb.velocity);
         if (IsDashing)
         {
             dashTime -= Time.deltaTime;
