@@ -9,10 +9,14 @@ public class PlayerMovementFace : MonoBehaviour
     //Player's Components we need
     private Rigidbody2D rb;
     private Animator animator;
-
+    
     //The player speed, can be modified in Unity
-    [SerializeField] private float moveSpeed;
-
+    [SerializeField] private float walkSpeed = 500;
+    [SerializeField] private float sprintSpeed = 800;
+    
+    private string sprintButton = "Fire3";
+    private bool isSprinting;
+    
     private float movementX;
     
     // Orientation du joueur : -1 = gauche et 1 = droite
@@ -42,12 +46,14 @@ public class PlayerMovementFace : MonoBehaviour
         {
             orientation = movementX;
         }
-        
-        
+
+        isSprinting = Input.GetButton(sprintButton);
+
     }
 
     private void FixedUpdate()
     {
+        var moveSpeed = isSprinting ? sprintSpeed : walkSpeed;
         rb.velocity = new Vector2(moveSpeed * Time.deltaTime * movementX, rb.velocity.y);
     }
 
