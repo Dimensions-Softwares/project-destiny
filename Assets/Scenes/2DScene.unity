@@ -1770,7 +1770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e3b6c913f9cab81898462253b2ff07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 500
+  walkSpeed: 500
+  sprintSpeed: 800
   isGrounded: 0
 --- !u!50 &665556766
 Rigidbody2D:
@@ -1920,6 +1921,7 @@ GameObject:
   - component: {fileID: 1475471598}
   - component: {fileID: 1475471600}
   - component: {fileID: 1475471599}
+  - component: {fileID: 1475471601}
   m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
@@ -1979,6 +1981,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1475471601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475471597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5f3e2f42dfa804a905cd1f6cb3d71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1654824458
 GameObject:
   m_ObjectHideFlags: 0
