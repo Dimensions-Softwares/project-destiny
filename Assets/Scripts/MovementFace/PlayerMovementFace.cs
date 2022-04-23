@@ -70,7 +70,7 @@ public class PlayerMovementFace : MonoBehaviour
             rb.velocity = new Vector2(sprintSpeed * Time.deltaTime * movementX, rb.velocity.y);
         } else if (isDashing)
         {
-            rb.velocity = new Vector2(dashSpeed * Time.deltaTime * orientation, rb.velocity.y);
+            rb.velocity = new Vector2(dashSpeed * Time.deltaTime * orientation, 0);
         } else
         {
             rb.velocity = new Vector2(walkSpeed * Time.deltaTime * movementX, rb.velocity.y);
