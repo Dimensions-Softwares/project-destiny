@@ -32,7 +32,7 @@ public class Jump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump") && playerMovementFace.isGrounded)
+        if (Input.GetButtonDown("Jump") && playerMovementFace.getIsGrounded())
         {
             rb.velocity = Vector2.up * jumpVelocity;
         }

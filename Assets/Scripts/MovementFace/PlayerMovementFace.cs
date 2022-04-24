@@ -16,22 +16,18 @@ public class PlayerMovementFace : MonoBehaviour
     [SerializeField] private float dashSpeed = 1000;
     [SerializeField] private float dashDuration = 0.3f;
     [SerializeField] private float dashCooldown = 1.0f; // TODO
+    [SerializeField] private int inAirDashesMax = 1;
 
+    private bool isGrounded = true;
     private string sprintButton = "Fire3";
     private string dashButton = "Fire2";
-
     private float dashStartTime;
-
+    private int inAirDashes = 0;
     private bool isSprinting;
     private bool isDashing;
-    
     private float movementX;
-    
-    // Orientation du joueur : -1 = gauche et 1 = droite
-    private float orientation;
+    private float orientation;  // Orientation du joueur : -1 = gauche et 1 = droite
 
-    [HideInInspector] public bool isGrounded;
-    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -54,12 +50,21 @@ public class PlayerMovementFace : MonoBehaviour
 
     private void updateDash()
     {
-        if (Input.GetButton(dashButton) && !isDashing)
+        // Start dashing
+        if (Input.GetButton(dashButton) && canDash())
         {
             dashStartTime = Time.time;
             isDashing = true;
+            if (!isGrounded) inAirDashes++;
         }
-        isDashing = isDashing && dashDuration >= Time.time - dashStartTime;
+        // Continue/stop dashing
+        isDashing = isDashing &&
+                    dashDuration >= Time.time - dashStartTime;
+    }
+
+    private bool canDash()
+    {
+        return !isDashing && Time.time - dashStartTime > dashCooldown && inAirDashes < inAirDashesMax;
     }
 
     private void getInput()
@@ -86,7 +91,7 @@ public class PlayerMovementFace : MonoBehaviour
 
     private void movePlayer()
     {
-        if (isSprinting)
+        if (isSprinting && isGrounded)
         {
             rb.velocity = new Vector2(sprintSpeed * Time.deltaTime * movementX, rb.velocity.y);
         }
@@ -100,5 +105,20 @@ public class PlayerMovementFace : MonoBehaviour
         }
     }
 
+    // GroundCheck
+    public void groundTouch()
+    {
+        isGrounded = true;
+        inAirDashes = 0;
+    }
 
+    public void groundLeave()
+    {
+        isGrounded = false;
+    }
+
+    public bool getIsGrounded()
+    {
+        return this.isGrounded;
+    }
 }

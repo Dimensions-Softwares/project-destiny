@@ -16,7 +16,7 @@ public class GroundCheck : MonoBehaviour
     {
         if (col.CompareTag("Platform"))
         {
-            playerMovementFace.isGrounded = true;
+            playerMovementFace.groundTouch();
         }
     }
 
@@ -24,7 +24,7 @@ public class GroundCheck : MonoBehaviour
     {
         if (other.CompareTag("Platform"))
         {
-            playerMovementFace.isGrounded = false;
+            playerMovementFace.groundLeave();
         }
     }
 }
