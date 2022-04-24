@@ -15,6 +15,7 @@ public class PlayerMovementFace : MonoBehaviour
     [SerializeField] private float sprintSpeed = 800;
     [SerializeField] private float dashSpeed = 1000;
     [SerializeField] private float dashDuration = 0.3f;
+    [SerializeField] private float dashCooldown = 1.0f; // TODO
 
     private string sprintButton = "Fire3";
     private string dashButton = "Fire2";
@@ -31,7 +32,6 @@ public class PlayerMovementFace : MonoBehaviour
 
     [HideInInspector] public bool isGrounded;
     
-    // Start is called before the first frame update
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,41 +40,65 @@ public class PlayerMovementFace : MonoBehaviour
 
     private void Update()
     {
-        movementX = Input.GetAxisRaw("Horizontal");
-        isSprinting = Input.GetButton(sprintButton);
+        getInput();
+        updateDash();
+        updateAnimator();
+        updateOrientation();
+    }
 
+    private void FixedUpdate()
+    {
+        movePlayer();
+    }
+
+
+    private void updateDash()
+    {
         if (Input.GetButton(dashButton) && !isDashing)
         {
             dashStartTime = Time.time;
             isDashing = true;
         }
-
         isDashing = isDashing && dashDuration >= Time.time - dashStartTime;
+    }
 
+    private void getInput()
+    {
+        movementX = Input.GetAxisRaw("Horizontal");
+        isSprinting = Input.GetButton(sprintButton);
+    }
+
+    private void updateAnimator()
+    {
         animator.SetFloat("Horizontal", movementX);
         animator.SetFloat("Speed", movementX * movementX);
         animator.SetFloat("Orientation", orientation);
-        
+    }
+
+    private void updateOrientation()
+    {
         if ((movementX * movementX) > 0.01)
         // On change l'orientation quand le joueur bouge    
         {
             orientation = movementX / Math.Abs(movementX);
         }
-
     }
 
-    private void FixedUpdate()
+    private void movePlayer()
     {
         if (isSprinting)
         {
             rb.velocity = new Vector2(sprintSpeed * Time.deltaTime * movementX, rb.velocity.y);
-        } else if (isDashing)
+        }
+        else if (isDashing)
         {
             rb.velocity = new Vector2(dashSpeed * Time.deltaTime * orientation, 0);
-        } else
+        }
+        else
         {
             rb.velocity = new Vector2(walkSpeed * Time.deltaTime * movementX, rb.velocity.y);
         }
     }
+
 
 }

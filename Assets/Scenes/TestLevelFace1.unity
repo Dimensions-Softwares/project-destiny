@@ -41326,7 +41326,8 @@ MonoBehaviour:
   walkSpeed: 500
   sprintSpeed: 800
   dashSpeed: 1000
-  dashDuration: 0.3
+  dashDuration: 0.2
+  dashCooldown: 1
   isGrounded: 0
 --- !u!50 &665556766
 Rigidbody2D:
