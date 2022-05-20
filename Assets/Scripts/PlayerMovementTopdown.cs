@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Common;
 
 public class PlayerMovementTopdown : MonoBehaviour
 {
@@ -74,6 +75,32 @@ public class PlayerMovementTopdown : MonoBehaviour
         animator.SetFloat("horizontal", movement.x);
         animator.SetFloat("vertical", movement.y);
         animator.SetFloat("speed", movement.sqrMagnitude);
+
+        if(movement.sqrMagnitude > 0)
+        {
+            animator.SetInteger("direction", GetPlayerDirection());
+        }
+    }
+
+    private int GetPlayerDirection()
+    {
+        if(Mathf.Abs(movement.y) < Common.MOVEMENT_SENSIBLITY)
+        {
+            return GetHorizontalDirection(movement.x);
+        } else
+        {
+            return GetVerticalDirection(movement.y);
+        }
+    }
+
+    private int GetHorizontalDirection(float x_movement)
+    {
+        return (int)(x_movement > 0 ? DIRECTIONS.EAST : DIRECTIONS.WEST);
+    }
+
+    private int GetVerticalDirection(float y_movement)
+    {
+        return (int)(y_movement > 0 ? DIRECTIONS.NORTH : DIRECTIONS.SOUTH);
     }
 
     public void UpdateDash(bool newValue)

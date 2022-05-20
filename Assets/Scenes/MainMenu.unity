@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingWindow: {fileID: 440603490}
-  levelToload: 
+  levelToload: SampleScene
 --- !u!114 &258254743
 MonoBehaviour:
   m_ObjectHideFlags: 0

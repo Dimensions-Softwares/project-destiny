@@ -9,4 +9,12 @@ public static class Common
 
     //If the player is idle and pressing Dash Button, this will be the dash direction
     public static Vector2 defaultDashDirection = Vector2.down;
+
+    public enum DIRECTIONS
+    {
+        NORTH = 1,
+        EAST = 2,
+        SOUTH = 3,
+        WEST = 4
+    }
 }
