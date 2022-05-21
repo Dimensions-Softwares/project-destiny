@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class DashMoveTopdown : MonoBehaviour
 {
-    private float sensibility = Common.MOVEMENT_SENSIBLITY;
+    private float sensibility = Constants.MOVEMENT_SENSIBLITY;
     private string dashButton = "Fire2";
     
     private Rigidbody2D rb;
@@ -32,12 +32,16 @@ public class DashMoveTopdown : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         //Components Initialization
         rb = GetComponent<Rigidbody2D>();
         moveScript = GetComponent<PlayerMovementTopdown>();
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
 
         //Attributes Initialization
         movementDir = Vector2.zero;
@@ -47,9 +51,8 @@ public class DashMoveTopdown : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Debug.LogWarning(rb.velocity);
         if (IsDashing)
         {
             dashTime -= Time.deltaTime;
@@ -73,7 +76,7 @@ public class DashMoveTopdown : MonoBehaviour
                 }
                 else
                 {
-                    movementDir = Common.defaultDashDirection * dashSpeed;
+                    movementDir = Constants.DEFAULT_DASH_DIRECTION * dashSpeed;
                 }
             }
         }
