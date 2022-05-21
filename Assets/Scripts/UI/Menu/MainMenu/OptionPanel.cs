@@ -19,7 +19,6 @@ public class OptionPanel : MonoBehaviour
         for(int i = 0; i<resolutions.Length; i++) 
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;// convert resolution in good format ex : 1920x1080
-            //Debug.Log(option);
             options.Add(option);
             if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height) // getting the personal screen resolution
             {
@@ -27,19 +26,17 @@ public class OptionPanel : MonoBehaviour
             }
         }
         resolutionDropdown.AddOptions(options); // add all options value
-        resolutionDropdown.value = currentResolutionIndex; // setting the personl screen resolution
+        resolutionDropdown.value = currentResolutionIndex; // setting the personal screen resolution
         resolutionDropdown.RefreshShownValue(); // refresh default dropdwon value
         Screen.fullScreen = true;
     }
     public void setVolume(float volume)
     {
         audioMixer.SetFloat("volume", volume); // Dynamic volume modification from slider
-        //Debug.Log(volume);
     }
 
     public void setFullScreen(bool isFullScreen)
     {
-        //Debug.Log("Avant :" + Screen.fullScreen);
         Screen.fullScreen = isFullScreen; //getting toogle value of fullscreen 
         
     }

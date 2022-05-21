@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(levelToload); //link in unity bettwen start and the good level
+        SceneManager.LoadScene(1); //link in unity bettwen start and the good level
     }
     public void SettitngsButton()
     {

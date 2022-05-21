@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main Script of the player
 public class Player : MonoBehaviour
 {
 
@@ -24,14 +25,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         CurrentHealth = maxHealth;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            takeDamage(20);
-        }
     }
 
     private void takeDamage(int damage)

@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class PlayerMovementTopdown : MonoBehaviour
 {
-    //Sensibility above which we consider the player is moving
-    private float sensibility = Common.MOVEMENT_SENSIBLITY;
-
-
-
+    //Game Manager Instance
+    private GameManager gameManager;
 
     //Player's Components we need
     private Rigidbody2D rb;
     private Animator animator;
 
+    //Boolean to check player's state
+    private bool dashing;
+    private bool sprinting;
 
-
-
-    private string sprintButton = "Fire3";
+    private readonly string sprintButton = Inputs.SPRINT_BUTTON;
 
     //The player speed, can be modified in Unity
     [SerializeField] private float walkSpeed = 5.0f;
@@ -32,16 +30,17 @@ public class PlayerMovementTopdown : MonoBehaviour
         private set => movement = value;
     }
 
-    private bool dashing;
-    private bool sprinting;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
 
     // Start is called before the first frame update
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        gameManager = GameManager.Instance;
         movement = Vector2.zero;
-
     }
 
     private void Update()
@@ -55,14 +54,12 @@ public class PlayerMovementTopdown : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!dashing)
+        if(!dashing && !gameManager.InventoryManager.IsActive())
         {
             //Actual Movement application
             ApplyMovement(sprinting ? sprintSpeed : walkSpeed);
         }
     }
-
-
 
     private void ApplyMovement(float speed)
     {
@@ -80,5 +77,4 @@ public class PlayerMovementTopdown : MonoBehaviour
     {
         dashing = newValue;
     }
-
 }

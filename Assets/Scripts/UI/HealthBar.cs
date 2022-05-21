@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class HealthBar : MonoBehaviour
 {
-    private Slider slider;
-    [SerializeField] private Gradient gradient;
-    [SerializeField] private Image fill;
+    private Slider slider; //Cursor to modify the health value
+    [SerializeField] private Gradient gradient; //To change color of health bar
+    [SerializeField] private Image fill; //actual color of the Bar
 
-    private void Start()
+    private void Awake()
     {
         slider = GetComponent<Slider>();
     }
