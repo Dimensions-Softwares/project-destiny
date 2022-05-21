@@ -201,7 +201,7 @@ MonoBehaviour:
   m_text: '?'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 773199eae2c4fb4458dda89c6b210a6b, type: 2}
-  m_sharedMaterial: {fileID: 3442300175244988979, guid: 773199eae2c4fb4458dda89c6b210a6b,
+  m_sharedMaterial: {fileID: 1891327682080214665, guid: 773199eae2c4fb4458dda89c6b210a6b,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -397,7 +397,7 @@ MonoBehaviour:
   slotIcon: {fileID: 4167552822433612072}
   slotItemNameText: {fileID: 2259007009154816575}
   stackSizeText: {fileID: 4296272976228392695}
-  itemData: {fileID: 11400000, guid: 2f8ceba7c979b8b44a1303a8d23733dc, type: 2}
+  itemData: {fileID: 11400000, guid: 56ec603eee522ba4bb64e59dbda9893b, type: 2}
   itemInfoBox: {fileID: 5732352162459439340}
 --- !u!1001 &8633808303104019683
 PrefabInstance:
