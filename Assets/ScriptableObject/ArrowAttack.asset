@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: PunchAttack
+  m_Name: ArrowAttack
   m_EditorClassIdentifier: Assembly-CSharp::Scriptable
-  frontAttack: {fileID: 7400000, guid: 2dd62e5246452d342a1e67373c9c0587, type: 2}
-  backAttack: {fileID: 7400000, guid: b8788f7d9fb5537458a2e031e0731409, type: 2}
-  leftAttack: {fileID: 7400000, guid: 05660f69fe558eb43b40cc6e34bef613, type: 2}
-  rightAttack: {fileID: 7400000, guid: 3b730c717674ba74192191c58dc32236, type: 2}
+  frontAttack: {fileID: 7400000, guid: 68f6c2d257e18d8438e019e4e0cb9a5b, type: 2}
+  backAttack: {fileID: 7400000, guid: 4f1e08e39e7c83f49a9b332be93166e8, type: 2}
+  leftAttack: {fileID: 7400000, guid: 9cce54874ce433744a72b1d8902a723d, type: 2}
+  rightAttack: {fileID: 7400000, guid: 81530eb754d605446b81d9c5b55692f0, type: 2}
   upLeft: {fileID: 0}
   upRight: {fileID: 0}
   downLeft: {fileID: 0}

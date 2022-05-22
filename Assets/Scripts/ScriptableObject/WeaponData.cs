@@ -4,15 +4,15 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "My Game/Weapon Data")]
-public class Scriptable : ScriptableObject
+public class WeaponData : ScriptableObject
 {
-    Animation frontAttack;
-    Animation backAttack;
-    Animation leftAttack;
-    Animation rightAttack;
-    Animation upLeft;
-    Animation upRight;
-    Animation downLeft;
-    Animation downRight;
+    public AnimationClip frontAttack;
+    public AnimationClip backAttack;
+    public AnimationClip leftAttack;
+    public AnimationClip rightAttack;
+    public AnimationClip upLeft;
+    public AnimationClip upRight;
+    public AnimationClip downLeft;
+    public AnimationClip downRight;
 
 }

@@ -2,19 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
+    private void Awake()
+    {
+        GameManager.Instance.Weapons.Enqueue("punch");
+        GameManager.Instance.Weapons.Enqueue("bow");
+
+    }
+
     private void Update()
     {
+        
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Atack();
+            Attack();
         }
     }
 
-    void Atack()
+    void Attack()
     {
+
         animator.SetTrigger("attack");
         animator.SetBool("isAttacking", true);
     }
