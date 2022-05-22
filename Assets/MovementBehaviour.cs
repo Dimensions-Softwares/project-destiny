@@ -20,7 +20,7 @@ public class MovementBehaviour : StateMachineBehaviour
     {
         
         float horizontalVelocity = Mathf.Cos(animator.GetFloat("horizontal"));
-        float verticalVelocity = Mathf.Sin(animator.GetFloat("Vertical"));
+        float verticalVelocity = Mathf.Sin(animator.GetFloat("vertical"));
 
 
        

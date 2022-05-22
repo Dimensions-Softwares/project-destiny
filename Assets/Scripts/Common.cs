@@ -9,7 +9,7 @@ public static class Common
     //If the player is idle and pressing Dash Button, this will be the dash direction
     public static Vector2 defaultDashDirection = Vector2.down;
     [SerializeField]
-    public static Dictionary<string, WeaponData> weaponDictionary;
+    
     public enum DIRECTIONS
     {
         NORTH = 1,
