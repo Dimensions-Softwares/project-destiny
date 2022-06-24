@@ -43,3 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a03ae04909f264da41298e99af70b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogBoxPrefab: {fileID: 3939756297712889770, guid: 63de2bc564b37da43a40623c0abb4438,
+    type: 3}

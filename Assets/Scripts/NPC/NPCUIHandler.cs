@@ -14,7 +14,7 @@ public class NPCUIHandler : MonoBehaviour
 
     private void Start()
     {
-        HideName();
+        OnPlayerAway();
     }
 
     public void OnPlayerProximity()

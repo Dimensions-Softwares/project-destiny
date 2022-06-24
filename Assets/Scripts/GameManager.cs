@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -100,6 +99,28 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
     #endregion
 
 
+    #region Player
+
+    public event EventHandler playerProximityEnterEventHandler;
+    public event EventHandler playerProximityExitEventHandler;
+
+    public void onPlayerProximityEnterEvent(Interactable interaction)
+    {
+        EventHandler playerProxEnter = playerProximityEnterEventHandler;
+        playerProxEnter(interaction, null);
+    }
+
+    public void onPlayerProximityExitEvent()
+    {
+        EventHandler playerProxExit = playerProximityExitEventHandler;
+        playerProxExit(null, null);
+    }
+
+
+
+    #endregion
+
+
     #region Main
 
     private void Awake()
@@ -110,5 +131,9 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
         healthBarObservers = new List<IObserver<HealthBar>>();
     }
 
+    #endregion
+
+    #region Dialog
+    public GameObject dialogBoxPrefab;
     #endregion
 }

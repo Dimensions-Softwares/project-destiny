@@ -28,4 +28,9 @@ public static class Constants
     public static readonly int MAX_ITEM_STACK_SIZE = 99;
 
     #endregion
+
+
+    #region Dialog
+    public static readonly float CHARACTER_DISPLAY_SPEED = 0.025f;
+    #endregion
 }
