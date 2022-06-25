@@ -4,13 +4,26 @@ using UnityEngine;
 
 public static class Constants
 {
+    #region Text
+    public static readonly string SEPARATORS_REGEX = @"(?<=[.,; ?!:])";
+    public static readonly float CHARACTER_WIDTH = 49.20313f;
+    public static readonly float CHARACTER_DISPLAY_SPEED = 0.025f;
+    #endregion
+
+
+    #region Player Info
+
+    public static readonly string PLAYER_TAG = "Player";
+
+    #endregion
+
 
     #region Player Movement
 
     //Absolute Sensibility above which we consider the player is moving
-    public static float MOVEMENT_SENSIBLITY = 0.01f;
+    public static readonly float MOVEMENT_SENSIBLITY = 0.01f;
     //If the player is idle and pressing Dash Button, this will be the dash direction
-    public static Vector2 DEFAULT_DASH_DIRECTION = Vector2.down;
+    public static readonly Vector2 DEFAULT_DASH_DIRECTION = Vector2.down;
 
     #endregion
 
@@ -18,7 +31,7 @@ public static class Constants
     #region Inventory
 
     //Max Stack Size for Collectibles
-    public static int MAX_ITEM_STACK_SIZE = 99;
+    public static readonly int MAX_ITEM_STACK_SIZE = 99;
 
     #endregion
 }

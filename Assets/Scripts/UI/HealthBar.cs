@@ -13,6 +13,7 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         slider = GetComponent<Slider>();
+        GameManager.Instance.RegisterHealthBar(this);
     }
 
     public void SetMaxHealth(int value)

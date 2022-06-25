@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlayerInteract))]
 public class DashMoveTopdown : MonoBehaviour
 {
     private float sensibility = Constants.MOVEMENT_SENSIBLITY;
@@ -19,6 +20,8 @@ public class DashMoveTopdown : MonoBehaviour
     
     private float dashTime;
     private Vector2 movementDir;
+
+    private PlayerInteract playerInteract;
 
 
     private bool dashing;
@@ -37,6 +40,7 @@ public class DashMoveTopdown : MonoBehaviour
         //Components Initialization
         rb = GetComponent<Rigidbody2D>();
         moveScript = GetComponent<PlayerMovementTopdown>();
+        playerInteract = GetComponent<PlayerInteract>();
     }
 
     // Start is called before the first frame update
@@ -66,7 +70,7 @@ public class DashMoveTopdown : MonoBehaviour
         }
         else
         {
-            if (Input.GetButtonDown(dashButton))
+            if (Input.GetButtonDown(dashButton) && CanDash())
             {
                 IsDashing = true;
                 
@@ -84,6 +88,14 @@ public class DashMoveTopdown : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = movementDir;
+        if(IsDashing)
+        {
+            rb.velocity = movementDir;
+        }
+    }
+
+    private bool CanDash()
+    {
+        return !playerInteract.IsInteracting;
     }
 }

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInteract))]
 public class PlayerMovementTopdown : MonoBehaviour
 {
     //Game Manager Instance
@@ -12,14 +14,16 @@ public class PlayerMovementTopdown : MonoBehaviour
     private Animator animator;
 
     //Boolean to check player's state
-    private bool dashing;
-    private bool sprinting;
+    private bool isDashing;
+    private bool isSprinting;
 
     private readonly string sprintButton = Inputs.SPRINT_BUTTON;
 
     //The player speed, can be modified in Unity
     [SerializeField] private float walkSpeed = 5.0f;
     [SerializeField] private float sprintSpeed = 8.5f;
+
+    private PlayerInteract playerInteract;
 
     private Vector2 movement;
 
@@ -34,6 +38,7 @@ public class PlayerMovementTopdown : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerInteract = GetComponent<PlayerInteract>();
     }
 
     // Start is called before the first frame update
@@ -48,17 +53,25 @@ public class PlayerMovementTopdown : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        sprinting = Input.GetButton(sprintButton);
-        UpdateAnimatorParameters();
+        isSprinting = Input.GetButton(sprintButton);
+        if (CanMove())
+        {
+            UpdateAnimatorParameters();
+        }
     }
 
     private void FixedUpdate()
     {
-        if(!dashing && !gameManager.InventoryManager.IsActive())
+        if(CanMove())
         {
             //Actual Movement application
-            ApplyMovement(sprinting ? sprintSpeed : walkSpeed);
+            ApplyMovement(isSprinting ? sprintSpeed : walkSpeed);
         }
+    }
+
+    private bool CanMove()
+    {
+        return !isDashing && !gameManager.InventoryManager.IsActive() && !playerInteract.IsInteracting;
     }
 
     private void ApplyMovement(float speed)
@@ -75,6 +88,6 @@ public class PlayerMovementTopdown : MonoBehaviour
 
     public void UpdateDash(bool newValue)
     {
-        dashing = newValue;
+        isDashing = newValue;
     }
 }
