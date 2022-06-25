@@ -10,25 +10,34 @@ public class DialogTextManager : MonoBehaviour
     private float characterDisplaySpeed = Constants.CHARACTER_DISPLAY_SPEED;
     private TextMeshProUGUI currentText;
     private bool isDisplayingLine;
+    private RectTransform parent;
+    private float charWidth = Constants.CHARACTER_WIDTH;
+    private string currentLine;
 
     private void Awake()
     {
         currentText = GetComponent<TextMeshProUGUI>();
         isDisplayingLine = false;
+        parent = GetComponentInParent<RectTransform>();
+        currentLine = "";
     }
 
     public IEnumerator DisplayLine(string line)
     {
         isDisplayingLine = true;
         currentText.text = "";
-        foreach(string element in GetWords(line))
+        foreach(string word in GetWords(line))
         {
-            if (IsWordTooLong(element))
+            if (IsWordTooLong(word))
             {
                 currentText.text += "\n";
+                currentLine = "";
             }
-            yield return DisplayElement(element);
+            yield return DisplayElement(word);
+            currentLine += word;
         }
+        isDisplayingLine = false;
+        currentLine = "";
     }
 
     private IEnumerator DisplayElement(string element)
@@ -50,10 +59,8 @@ public class DialogTextManager : MonoBehaviour
         }
         else
         {
-            int lastChar = currentText.text.Length - 1;
-            float linePos = currentText.textInfo.characterInfo[lastChar].xAdvance;
-            float charWidth = linePos / currentText.text.Length;
-            if(charWidth * word.Length + linePos > 500)
+            float textBoxWidth = parent.rect.width;
+            if (charWidth * (word.Length + currentLine.Length) > textBoxWidth)
             {
                 return true;
             }
@@ -61,7 +68,6 @@ public class DialogTextManager : MonoBehaviour
             {
                 return false;
             }
-
         }
     }
 

@@ -6,6 +6,8 @@ public static class Constants
 {
     #region Text
     public static readonly string SEPARATORS_REGEX = @"(?<=[.,; ?!:])";
+    public static readonly float CHARACTER_WIDTH = 49.20313f;
+    public static readonly float CHARACTER_DISPLAY_SPEED = 0.025f;
     #endregion
 
 
@@ -31,10 +33,5 @@ public static class Constants
     //Max Stack Size for Collectibles
     public static readonly int MAX_ITEM_STACK_SIZE = 99;
 
-    #endregion
-
-
-    #region Dialog
-    public static readonly float CHARACTER_DISPLAY_SPEED = 0.025f;
     #endregion
 }

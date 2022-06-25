@@ -9,13 +9,13 @@ public class NPCUIHandler : MonoBehaviour
     private bool nameTextIsActive;
 
 
-    [SerializeField] private TextMeshPro interactText;
-    private bool interactTextIsActive;
+    [SerializeField] private GameObject interactIcon;
+    private bool interactIconIsActive;
 
     private void Start()
     {
         HideName();
-        HideInteractText();
+        HideInteractIcon();
     }
 
     public void OnPlayerProximity()
@@ -24,9 +24,9 @@ public class NPCUIHandler : MonoBehaviour
         {
             DisplayName();
         }
-        if (!interactTextIsActive)
+        if (!interactIconIsActive)
         {
-            DisplayInteractText();
+            DisplayInteractIcon();
         }
     }
 
@@ -36,9 +36,9 @@ public class NPCUIHandler : MonoBehaviour
         {
             HideName();
         }
-        if (interactTextIsActive)
+        if (interactIconIsActive)
         {
-            HideInteractText();
+            HideInteractIcon();
         }
     }
 
@@ -57,17 +57,17 @@ public class NPCUIHandler : MonoBehaviour
         npcName.alpha = 0;
     }
 
-    private void DisplayInteractText()
+    private void DisplayInteractIcon()
     {
-        interactTextIsActive = true;
-        interactText.alpha = 255;
+        interactIconIsActive = true;
+        interactIcon.SetActive(true);
         
     }
 
-    private void HideInteractText()
+    private void HideInteractIcon()
     {
-        interactTextIsActive = false;
-        interactText.alpha = 0;
+        interactIconIsActive = false;
+        interactIcon.SetActive(false);
     }
 
     public void SetName(string name)
