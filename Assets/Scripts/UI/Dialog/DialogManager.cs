@@ -10,6 +10,7 @@ public class DialogManager : MonoBehaviour
     void Start()
     {
         dialogLines = new List<string>(dialog.linesList);
+        EventAgregator.OnPlayerInteractionStart(gameObject, null);
         DisplayNextLine();
     }
 
@@ -42,9 +43,13 @@ public class DialogManager : MonoBehaviour
 
     private void DestroyDialogBox()
     {
-
         Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        EventAgregator.OnPlayerInteractionEnd(gameObject, null);
+    }
 
+    
 }

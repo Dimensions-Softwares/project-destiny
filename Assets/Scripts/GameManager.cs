@@ -115,9 +115,11 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
         EventHandler playerProxExit = playerProximityExitEventHandler;
         playerProxExit(null, null);
     }
+    #endregion
 
 
-
+    #region Dialog
+    public GameObject dialogBoxPrefab;
     #endregion
 
 
@@ -133,7 +135,5 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
 
     #endregion
 
-    #region Dialog
-    public GameObject dialogBoxPrefab;
-    #endregion
+    
 }

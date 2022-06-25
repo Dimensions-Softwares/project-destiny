@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class Constants
 {
+    #region Text
+    public static readonly string SEPARATORS_REGEX = @"(?<=[.,; ?!:])";
+    #endregion
+
 
     #region Player Info
 

@@ -10,23 +10,38 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private InventoryUI inventoryUI; //Reference to the UI
     private static Inventory inventory; //Actual Inventory
 
+    private bool isPlayerInteracting;
+
     // Start is called before the first frame update
     private void Awake()
     {
         InitializeInventory();
+        RegisterEvents();
+    }
+
+    private void RegisterEvents()
+    {
+        EventAgregator.PlayerInteractionStartEvent += OnPlayerInteractionStart;
+        EventAgregator.PlayerInteractionEndEvent += OnPlayerInteractionEnd;
     }
 
     private void Start()
     {
+        isPlayerInteracting = false;
         GameManager.Instance.RegisterInventory(this); //Register itself to the GameManager
     }
 
     void Update()
     {
-        if (Input.GetButtonUp(Inputs.INVENTORY_BUTTON))
+        if (Input.GetButtonUp(Inputs.INVENTORY_BUTTON) && CanOpenInventory())
         {
             ToggleInventory();
         }
+    }
+
+    private bool CanOpenInventory()
+    {
+        return !isPlayerInteracting;
     }
 
     private void InitializeInventory()
@@ -56,5 +71,15 @@ public class InventoryManager : MonoBehaviour
     public bool IsActive()
     {
         return inventoryUI.gameObject.activeSelf;
+    }
+
+    private void OnPlayerInteractionStart(object sender, EventArgs args)
+    {
+        isPlayerInteracting = true;
+    }
+
+    private void OnPlayerInteractionEnd(object sender, EventArgs args)
+    {
+        isPlayerInteracting = false;
     }
 }

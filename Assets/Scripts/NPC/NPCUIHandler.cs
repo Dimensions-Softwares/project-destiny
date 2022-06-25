@@ -14,56 +14,64 @@ public class NPCUIHandler : MonoBehaviour
 
     private void Start()
     {
-        OnPlayerAway();
+        HideName();
+        HideInteractText();
     }
 
     public void OnPlayerProximity()
     {
-        DisplayName();
-        DisplayInteractText();
+        if (!nameTextIsActive)
+        {
+            DisplayName();
+        }
+        if (!interactTextIsActive)
+        {
+            DisplayInteractText();
+        }
     }
 
     public void OnPlayerAway()
     {
-        HideName();
-        HideInteractText();
+        if (nameTextIsActive)
+        {
+            HideName();
+        }
+        if (interactTextIsActive)
+        {
+            HideInteractText();
+        }
     }
 
 
 
     private void DisplayName()
     {
-        if (!nameTextIsActive)
-        {
-            nameTextIsActive = true;
-            npcName.alpha = 255;
-        }
+        nameTextIsActive = true;
+        npcName.alpha = 255;
+        
     }
 
     private void HideName()
     {
-        if (nameTextIsActive)
-        {
-            nameTextIsActive = false;
-            npcName.alpha = 0;
-        }
+        nameTextIsActive = false;
+        npcName.alpha = 0;
     }
 
     private void DisplayInteractText()
     {
-        if (!interactTextIsActive)
-        {
-            interactTextIsActive = true;
-            interactText.alpha = 255;
-        }
+        interactTextIsActive = true;
+        interactText.alpha = 255;
+        
     }
 
     private void HideInteractText()
     {
-        if (interactTextIsActive)
-        {
-            interactTextIsActive = false;
-            interactText.alpha = 0;
-        }
+        interactTextIsActive = false;
+        interactText.alpha = 0;
+    }
+
+    public void SetName(string name)
+    {
+        npcName.text = name;
     }
 }

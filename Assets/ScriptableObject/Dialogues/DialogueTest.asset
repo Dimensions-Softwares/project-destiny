@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DialogueTest
   m_EditorClassIdentifier: 
   linesList:
-  - 1ere phrase du dialogue
+  - Bonjour petit homme, comment vas-tu aujourd'hui ? Je fais une phrase tres longue
+    pour voir jusqu'ou ca va aller, juste pour tester les dialogues
   - 2eme phrase du dialogue
   - 3eme phrase du dialogue

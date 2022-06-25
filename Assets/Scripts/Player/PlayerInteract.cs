@@ -6,31 +6,45 @@ using UnityEngine;
 public class PlayerInteract : MonoBehaviour
 {
     private Interactable currentInteraction = null;
+    public bool IsInteracting { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.playerProximityEnterEventHandler += PlayerProximityEnterEvent;
-        GameManager.Instance.playerProximityExitEventHandler += PlayerProximityExitEvent;
+        IsInteracting = false;
+        RegisterEvents();
     }
 
-    private void PlayerProximityEnterEvent(object sender, EventArgs args)
+    private void RegisterEvents()
+    {
+        #region Proximity
+        EventAgregator.PlayerProximityEnterEvent += OnPlayerProximityEnter;
+        EventAgregator.PlayerProximityExitEvent += OnPlayerProximityExit;
+        #endregion
+
+        #region Interaction
+        EventAgregator.PlayerInteractionEndEvent += OnPlayerInteractionEnd;
+        EventAgregator.PlayerInteractionStartEvent += OnPlayerInteractionStart;
+        #endregion
+    }
+
+    private void OnPlayerProximityEnter(object sender, PlayerProximityEnterEventArgs args)
     {
         if(currentInteraction != null)
         {
             Debug.LogError("Overlap of interactions.");
         } 
-        else if (!(sender is Interactable))
+        else if (args.Interaction == null)
         {
-            Debug.LogError("Interaction is not implementing Interactable.");
+            Debug.LogError("Interaction is null.");
         } 
         else
         {
-            currentInteraction = (Interactable) sender;
+            currentInteraction = args.Interaction;
         }
     }
 
-    private void PlayerProximityExitEvent(object sender, EventArgs args)
+    private void OnPlayerProximityExit(object sender, EventArgs args)
     {
         if (currentInteraction == null)
         {
@@ -42,10 +56,25 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
+    private void OnPlayerInteractionStart(object sender, EventArgs args)
+    {
+        IsInteracting = true;
+    }
+
+    private void OnPlayerInteractionEnd(object sender, EventArgs args)
+    {
+        IsInteracting = false;
+    }
+
+    private bool CanInteract()
+    {
+        return currentInteraction != null && !IsInteracting && !GameManager.Instance.InventoryManager.IsActive();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown(Inputs.INTERACT_BUTTON) && currentInteraction != null)
+        if(Input.GetButtonDown(Inputs.INTERACT_BUTTON) && CanInteract())
         {
             currentInteraction.Interact();
         }

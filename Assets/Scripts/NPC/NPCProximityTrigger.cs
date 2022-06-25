@@ -20,7 +20,7 @@ public class NPCProximityTrigger : MonoBehaviour
     {
         if(collision.CompareTag(Constants.PLAYER_TAG))
         {
-            GameManager.Instance.onPlayerProximityEnterEvent(NPCInteraction);
+            EventAgregator.OnPlayerProximityEnter(gameObject, new PlayerProximityEnterEventArgs(NPCInteraction));
             uiHandler.OnPlayerProximity();
         }
     }
@@ -29,7 +29,7 @@ public class NPCProximityTrigger : MonoBehaviour
     {
         if (collision.CompareTag(Constants.PLAYER_TAG))
         {
-            GameManager.Instance.onPlayerProximityExitEvent();
+            EventAgregator.OnPlayerProximityExit(gameObject, null);
             uiHandler.OnPlayerAway();
         }
     }
