@@ -5,8 +5,7 @@ using UnityEngine;
 public static class Constants
 {
     #region Text
-    public static readonly string SEPARATORS_REGEX = @"(?<=[.,; ?!:])";
-    public static readonly float CHARACTER_WIDTH = 49.20313f;
+    public static readonly string SEPARATORS_REGEX = @"(?<=[ ])";
     public static readonly float CHARACTER_DISPLAY_SPEED = 0.025f;
     #endregion
 
