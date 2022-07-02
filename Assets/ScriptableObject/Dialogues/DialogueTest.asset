@@ -16,3 +16,6 @@ MonoBehaviour:
   - Bonjour petit homme, comment vas-tu aujourd'hui ? Je fais une phrase tres longue
   - 2eme phrase du dialogue
   - 3eme phrase du dialogue
+  - Derniere phrase du dialogue qui est tres longue parce que je voudrais tester
+    si le systeme de defilement de texte marche bien ou pas on verra bien de toute
+    facon

@@ -7,11 +7,13 @@ using UnityEngine;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class DialogTextManager : MonoBehaviour
 {
+
+    [SerializeField] private TextMeshProUGUI ghostText;
+
     private float characterDisplaySpeed = Constants.CHARACTER_DISPLAY_SPEED;
     private TextMeshProUGUI currentText;
     private bool isDisplayingLine;
     private RectTransform parent;
-    private float charWidth = Constants.CHARACTER_WIDTH;
     private string currentLine;
 
     private void Awake()
@@ -53,14 +55,19 @@ public class DialogTextManager : MonoBehaviour
     }
     private bool IsWordTooLong(string word)
     {
-        if(word.Length <= 1)
+        if (word.Length <= 1)
         {
             return false;
         }
         else
         {
+            float totalTextWidth = ghostText.GetTextInfo(currentLine + word).textComponent.textBounds.size.x;
+
+            totalTextWidth += currentText.margin.x + currentText.margin.z;
+
             float textBoxWidth = parent.rect.width;
-            if (charWidth * (word.Length + currentLine.Length) > textBoxWidth)
+
+            if (totalTextWidth > textBoxWidth)
             {
                 return true;
             }
