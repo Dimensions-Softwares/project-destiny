@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class EventAgregator
 {
-    #region Proximity Trigger
+    #region Player Proximity Trigger
 
     public static event EventHandler<PlayerProximityEnterEventArgs> PlayerProximityEnterEvent;
 
@@ -25,7 +25,7 @@ public static class EventAgregator
 
     #endregion
 
-    #region Interaction
+    #region Player Interaction
 
     public static event EventHandler PlayerInteractionStartEvent;
 
@@ -41,6 +41,33 @@ public static class EventAgregator
     {
         EventHandler tempEvent = PlayerInteractionEndEvent;
         tempEvent(sender, args);
+    }
+
+    #endregion
+
+    #region Inventory
+
+    public static event EventHandler InventoryRegisteredEvent;
+
+    public static void OnInventoryRegistered(GameObject sender, EventArgs args)
+    {
+        EventHandler tempEvent = InventoryRegisteredEvent;
+        tempEvent(sender, args);
+    }
+
+    #endregion
+
+    #region Health Bar
+
+    public static event EventHandler HealthBarRegisteredEvent;
+
+    public static void OnHealthBarRegistered(object sender, EventArgs args)
+    {
+        if(HealthBarRegisteredEvent != null)
+        {
+            EventHandler tempEvent = HealthBarRegisteredEvent;
+            tempEvent(sender, args);
+        }
     }
 
     #endregion

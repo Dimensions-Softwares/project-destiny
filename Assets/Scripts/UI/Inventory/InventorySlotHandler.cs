@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 
 //UI Class that handles the Slot of an Item
-public class InventorySlotHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IObserver<InventoryManager>
+public class InventorySlotHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     
     [SerializeField] private Image slotIcon; //Icon of the object
@@ -16,7 +16,6 @@ public class InventorySlotHandler : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private GameObject itemInfoBox; //The GameObject of the InfoBox displaying the name
 
     private InventoryItem inventoryItem;
-    private IDisposable observationResponse; //For unsubscribing to the event of Inventory Manager Registering to Game Manager
 
     public InventoryItemData ItemData
     {
@@ -38,7 +37,7 @@ public class InventorySlotHandler : MonoBehaviour, IPointerEnterHandler, IPointe
         }
         else //Else, we subscribe to the event to be notified once that happens
         {
-            observationResponse = GameManager.Instance.Subscribe(this);
+            EventAgregator.InventoryRegisteredEvent += OnInventoryRegistered;
         }
     }
     public void SetItem(InventoryItemData itemData)
@@ -80,7 +79,7 @@ public class InventorySlotHandler : MonoBehaviour, IPointerEnterHandler, IPointe
         itemInfoBox.SetActive(true);
     }
 
-    public void OnCompleted() //When the Inventory Manager has finally registered
+    public void OnInventoryRegistered(object sender, EventArgs args) //When the Inventory Manager has finally registered
     {
         RegisterToInventory();
 
@@ -91,19 +90,11 @@ public class InventorySlotHandler : MonoBehaviour, IPointerEnterHandler, IPointe
         else
         {
             Debug.LogError("Item Slot initiliazed without Item Data.");
-        }
-        
-        observationResponse.Dispose(); //Unsubscribe to stop receiving notification
+        }        
     }
 
     private void RegisterToInventory()
     {
         inventoryItem = GameManager.Instance.InventoryManager.Register(gameObject, itemData); //Registering to the Inventory
     }
-
-
-    //Not used, but needed to implement
-    void IObserver<InventoryManager>.OnError(Exception error) {}
-
-    void IObserver<InventoryManager>.OnNext(InventoryManager value) {}
 }

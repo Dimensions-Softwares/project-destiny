@@ -29,6 +29,7 @@ public class InventoryManager : MonoBehaviour
     {
         isPlayerInteracting = false;
         GameManager.Instance.RegisterInventory(this); //Register itself to the GameManager
+        EventAgregator.OnInventoryRegistered(null, EventArgs.Empty);
     }
 
     void Update()
