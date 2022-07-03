@@ -7,6 +7,6 @@ public class NPCInteraction : MonoBehaviour,Interactable
     [SerializeField] private DialogObject dialog;
     public void Interact()
     {
-        DialogBoxFactory.InstantiateDialogBox(GameManager.Instance.dialogBoxPrefab, dialog);
+        DialogBoxFactory.InstantiateDialogBox(GameManager.Instance.DialogBoxPrefab, dialog);
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObservable<HealthBar>
+public class GameManager : MonoBehaviour, IObservable<HealthBar>
 {
     #region Instance definition
     private static GameManager _instance;
@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
 
     #region Inventory
 
-    List<IObserver<InventoryManager>> inventoryObservers; //To notify Inventory Slots that Inventory is ready
-
     private InventoryManager inventoryManager;
     public InventoryManager InventoryManager { get => inventoryManager; private set => inventoryManager = value; }
 
@@ -31,30 +29,15 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
     //Method to register the reference to the Inventory Manager so that other scritps can access it
     public void RegisterInventory(InventoryManager inventory)
     {
-        if(InventoryManager != null)
+        if (InventoryManager != null)
         {
             Debug.LogWarning("Attempted to set Register Inventory but is already set.");
         }
         else
         {
             InventoryManager = inventory;
-            foreach (var observer in inventoryObservers.ToArray()) //ToArray() in order to copy the list so it's not modified by OnCompleted()
-            {
-                observer.OnCompleted(); //Notify the observers that the inventory is finally registered
-            }
             Debug.Log("Inventory successfully registered.");
         }
-    }
-
-    //Method to allow observers to subscribe to the event of Inventory Registering
-    public IDisposable Subscribe(IObserver<InventoryManager> observer)
-    {
-        if(InventoryManager == null && !inventoryObservers.Contains(observer))
-        {
-            inventoryObservers.Add(observer);
-        }
-
-        return new InventoryUnsubscriber<InventoryManager>(inventoryObservers, observer);
     }
 
     #endregion
@@ -83,12 +66,12 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
             }
             Debug.Log("Health Bar successfully registered.");
         }
-        
+
     }
 
     public IDisposable Subscribe(IObserver<HealthBar> observer)
     {
-        if(HealthBar != null && healthBarObservers.Contains(observer))
+        if (HealthBar != null && healthBarObservers.Contains(observer))
         {
             healthBarObservers.Add(observer);
         }
@@ -107,19 +90,21 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
     public void onPlayerProximityEnterEvent(Interactable interaction)
     {
         EventHandler playerProxEnter = playerProximityEnterEventHandler;
-        playerProxEnter(interaction, null);
+        playerProxEnter(interaction, EventArgs.Empty);
     }
 
     public void onPlayerProximityExitEvent()
     {
         EventHandler playerProxExit = playerProximityExitEventHandler;
-        playerProxExit(null, null);
+        playerProxExit(null, EventArgs.Empty);
     }
     #endregion
 
 
     #region Dialog
-    public GameObject dialogBoxPrefab;
+    [SerializeField] private GameObject dialogBoxPrefab;
+
+    public GameObject DialogBoxPrefab { get => dialogBoxPrefab; private set => dialogBoxPrefab = value; }
     #endregion
 
 
@@ -129,7 +114,6 @@ public class GameManager : MonoBehaviour, IObservable<InventoryManager>, IObserv
     {
         _instance = this; //Init of Game manager
         DontDestroyOnLoad(gameObject); //So that the GameManager is persistent between scenes
-        inventoryObservers = new List<IObserver<InventoryManager>>(); //Initialization of Observer for Inventory Manager
         healthBarObservers = new List<IObserver<HealthBar>>();
     }
 

@@ -48,7 +48,7 @@ public class Player : MonoBehaviour, IObserver<HealthBar>
         }
     }
 
-    public void OnCompleted()
+    public void OnInventoryRegistered()
     {
         RegisterHealthBar();
     }
@@ -68,5 +68,8 @@ public class Player : MonoBehaviour, IObserver<HealthBar>
         healthBar = GameManager.Instance.HealthBar;
     }
 
-
+    public void OnCompleted()
+    {
+        throw new NotImplementedException();
+    }
 }

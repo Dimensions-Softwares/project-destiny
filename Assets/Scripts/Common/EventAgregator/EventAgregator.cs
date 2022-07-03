@@ -44,4 +44,16 @@ public static class EventAgregator
     }
 
     #endregion
+
+    #region Inventory
+
+    public static event EventHandler InventoryRegisteredEvent;
+
+    public static void OnInventoryRegistered(GameObject sender, EventArgs args)
+    {
+        EventHandler tempEvent = InventoryRegisteredEvent;
+        tempEvent(sender, args);
+    }
+
+    #endregion
 }
