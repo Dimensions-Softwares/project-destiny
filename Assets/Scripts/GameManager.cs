@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour, IObservable<HealthBar>
+public class GameManager : MonoBehaviour
 {
     #region Instance definition
     private static GameManager _instance;
@@ -47,58 +47,26 @@ public class GameManager : MonoBehaviour, IObservable<HealthBar>
 
     private HealthBar healthBar;
 
-    public HealthBar HealthBar => healthBar;
-
-    private List<IObserver<HealthBar>> healthBarObservers;
+    public HealthBar HealthBar { get => healthBar; private set => healthBar = value; }
 
     public void RegisterHealthBar(HealthBar healthBar)
     {
-        if (InventoryManager != null)
+        if (HealthBar != null)
         {
-            Debug.LogWarning("Attempted to set Register Inventory but is already set.");
+            Debug.LogWarning("Attempted to set Health Bar but is already set.");
         }
         else
         {
-            this.healthBar = healthBar;
-            foreach (IObserver<HealthBar> healthBarObserver in healthBarObservers.ToArray())
-            {
-                healthBarObserver.OnNext(healthBar);
-            }
+            HealthBar = healthBar;
+            EventAgregator.OnHealthBarRegistered(null, EventArgs.Empty);
             Debug.Log("Health Bar successfully registered.");
         }
-
-    }
-
-    public IDisposable Subscribe(IObserver<HealthBar> observer)
-    {
-        if (HealthBar != null && healthBarObservers.Contains(observer))
-        {
-            healthBarObservers.Add(observer);
-        }
-
-        return new HealthBarUnsubcriber(healthBarObservers, observer);
     }
 
     #endregion
 
 
-    #region Player
 
-    public event EventHandler playerProximityEnterEventHandler;
-    public event EventHandler playerProximityExitEventHandler;
-
-    public void onPlayerProximityEnterEvent(Interactable interaction)
-    {
-        EventHandler playerProxEnter = playerProximityEnterEventHandler;
-        playerProxEnter(interaction, EventArgs.Empty);
-    }
-
-    public void onPlayerProximityExitEvent()
-    {
-        EventHandler playerProxExit = playerProximityExitEventHandler;
-        playerProxExit(null, EventArgs.Empty);
-    }
-    #endregion
 
 
     #region Dialog
@@ -114,7 +82,6 @@ public class GameManager : MonoBehaviour, IObservable<HealthBar>
     {
         _instance = this; //Init of Game manager
         DontDestroyOnLoad(gameObject); //So that the GameManager is persistent between scenes
-        healthBarObservers = new List<IObserver<HealthBar>>();
     }
 
     #endregion

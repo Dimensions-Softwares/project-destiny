@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Main Script of the player
-public class Player : MonoBehaviour, IObserver<HealthBar>
+public class Player : MonoBehaviour
 {
 
     private HealthBar healthBar;
@@ -31,12 +31,12 @@ public class Player : MonoBehaviour, IObserver<HealthBar>
         }
         else
         {
-            GameManager.Instance.Subscribe(this);
+            EventAgregator.HealthBarRegisteredEvent += OnHealthBarRegistered;
         }
         CurrentHealth = maxHealth;
     }
 
-    private void takeDamage(int damage)
+    private void TakeDamage(int damage)
     {
         if (damage >= CurrentHealth)
         {
@@ -48,19 +48,9 @@ public class Player : MonoBehaviour, IObserver<HealthBar>
         }
     }
 
-    public void OnInventoryRegistered()
+    public void OnHealthBarRegistered(object sender, EventArgs args)
     {
         RegisterHealthBar();
-    }
-
-    public void OnError(Exception error)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void OnNext(HealthBar value)
-    {
-        throw new NotImplementedException();
     }
 
     private void RegisterHealthBar()
@@ -68,8 +58,4 @@ public class Player : MonoBehaviour, IObserver<HealthBar>
         healthBar = GameManager.Instance.HealthBar;
     }
 
-    public void OnCompleted()
-    {
-        throw new NotImplementedException();
-    }
 }
