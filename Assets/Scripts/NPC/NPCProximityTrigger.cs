@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class handling Player's proximity to NPCs
+//Allows Player to interact with NPC when close enough
+
+
 [RequireComponent(typeof(NPCUIHandler))]
 [RequireComponent(typeof(NPCInteraction))]
 public class NPCProximityTrigger : MonoBehaviour
@@ -20,8 +24,9 @@ public class NPCProximityTrigger : MonoBehaviour
     {
         if(collision.CompareTag(Constants.PLAYER_TAG))
         {
+            //Notify Player that they're close enough to interact with the NPC, passing Interactable in parameters
             EventAgregator.OnPlayerProximityEnter(gameObject, new PlayerProximityEnterEventArgs(NPCInteraction));
-            uiHandler.OnPlayerProximity();
+            uiHandler.OnPlayerProximity(); //Display UI Tip around NPC
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+//Class that handles UI elements around NPC, like the name and the dialog icon
 public class NPCUIHandler : MonoBehaviour
 {
     [SerializeField] private TextMeshPro npcName;
