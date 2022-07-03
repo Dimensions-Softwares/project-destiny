@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-
     #region Inventory
 
     private InventoryManager inventoryManager;
@@ -41,7 +40,6 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-
 
     #region Health Bar
 
@@ -65,16 +63,11 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-
-
-
-
     #region Dialog
     [SerializeField] private GameObject dialogBoxPrefab;
 
     public GameObject DialogBoxPrefab { get => dialogBoxPrefab; private set => dialogBoxPrefab = value; }
     #endregion
-
 
     #region Main
 
@@ -85,6 +78,5 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-
     
 }
