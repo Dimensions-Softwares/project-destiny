@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Main Script of the player
+//Manages player's health and other general stats
 public class Player : MonoBehaviour
 {
 
-    private HealthBar healthBar;
+    private HealthBar healthBar; //Health Bar UI Script
 
     private int currentHealth;
     [SerializeField] private int maxHealth = 100;
@@ -31,7 +32,8 @@ public class Player : MonoBehaviour
         }
         else
         {
-            EventAgregator.HealthBarRegisteredEvent += OnHealthBarRegistered;
+            EventAgregator.HealthBarRegisteredEvent += OnHealthBarRegistered; //To be notified when the health
+                                                                              //bar is available in the Game Manager
         }
         CurrentHealth = maxHealth;
     }

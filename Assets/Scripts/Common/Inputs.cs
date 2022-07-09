@@ -10,4 +10,6 @@ public static class Inputs
     public const string SPRINT_BUTTON = "Sprint";
 
     public const string INTERACT_BUTTON = "Interact";
+
+    public const string DASH_BUTTON = "Dash";
 }

@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Script that manages the interaction available to the player
 public class PlayerInteract : MonoBehaviour
 {
-    private Interactable currentInteraction = null;
-    public bool IsInteracting { get; private set; }
+    private Interactable currentInteraction = null; // The current interaction that will be triggered
+                                                    // if the player presses the interact button
+    public bool IsInteracting { get; private set; } // Public property to allow other scripts to check if the player is interacting
 
-    // Start is called before the first frame update
     void Start()
     {
         IsInteracting = false;
@@ -28,19 +29,21 @@ public class PlayerInteract : MonoBehaviour
         #endregion
     }
 
+    // When the player is near enough an interactable entity
     private void OnPlayerProximityEnter(object sender, PlayerProximityEnterEventArgs args)
     {
+        
         if(currentInteraction != null)
         {
             Debug.LogError("Overlap of interactions.");
         } 
         else if (args.Interaction == null)
         {
-            Debug.LogError("Interaction is null.");
+            Debug.LogError("Incoming interaction is null.");
         } 
         else
         {
-            currentInteraction = args.Interaction;
+            currentInteraction = args.Interaction; //We set the current interaction to this one
         }
     }
 
@@ -76,7 +79,7 @@ public class PlayerInteract : MonoBehaviour
     {
         if(Input.GetButtonDown(Inputs.INTERACT_BUTTON) && CanInteract())
         {
-            currentInteraction.Interact();
+            currentInteraction.Interact(); //Trigger the interaction
         }
     }
 }
