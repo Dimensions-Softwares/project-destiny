@@ -2,6 +2,9 @@ using UnityEditor;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
 
+
+//Class found on the internet used to update Pivot of multiple sprites at once
+//To use it just multi-select the sprites you want, and on the windows top, select Custom > Update Sprite Pivots
 public static class PivotUpdater
 {
     [MenuItem("Custom/Update Sprite Pivots")]
@@ -16,7 +19,7 @@ public static class PivotUpdater
                 var dataProvider = factory.GetSpriteEditorDataProviderFromObject(obj);
                 dataProvider.InitSpriteEditorDataProvider();
 
-                SetPivot(dataProvider, new Vector2(0.5f, 0.065f));
+                SetPivot(dataProvider, new Vector2(0.5f, 0.065f)); //HERE: Put the pivot values you want
                 SetPhysicsShape(dataProvider);
 
                 dataProvider.Apply();

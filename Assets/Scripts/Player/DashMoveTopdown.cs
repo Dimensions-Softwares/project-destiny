@@ -7,30 +7,32 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInteract))]
 public class DashMoveTopdown : MonoBehaviour
 {
-    private float sensibility = Constants.MOVEMENT_SENSIBLITY;
-    private string dashButton = "Fire2";
+    //To know which direction the player will dash to
+    private readonly float sensibility = Constants.MOVEMENT_SENSIBLITY;
+
+    private readonly string dashButton = Inputs.DASH_BUTTON;
     
     private Rigidbody2D rb;
-    private PlayerMovementTopdown moveScript;
+    private PlayerMovementTopdown moveScript; //We need the current movement direction of the player to know where to dash
 
     [SerializeField] 
     private float dashSpeed = 5f;
     [SerializeField] 
-    private float startDashTime = 1f;
+    private float dashDuration = 1f; //in seconds
     
-    private float dashTime;
-    private Vector2 movementDir;
+    private float dashTime; //Internal variable to track the time elapsed since the current dash started
+    private Vector2 movementDir; //The actual direction of the dash 
 
-    private PlayerInteract playerInteract;
+    private PlayerInteract playerInteract; //To check whether the player can dash
 
 
-    private bool dashing;
+    private bool isDashing;
     public bool IsDashing
     {
-        get => dashing;
+        get => isDashing;
         private set
         {
-            dashing = value;
+            isDashing = value;
             moveScript.UpdateDash(value);
         }
     }
@@ -43,28 +45,25 @@ public class DashMoveTopdown : MonoBehaviour
         playerInteract = GetComponent<PlayerInteract>();
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
-
         //Attributes Initialization
         movementDir = Vector2.zero;
-        dashTime = startDashTime;
+        dashTime = dashDuration;
         IsDashing = false;
-
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (IsDashing)
         {
-            dashTime -= Time.deltaTime;
+            dashTime -= Time.deltaTime; //Reduce the remaining dash time
 
             if (dashTime <= 0)
             {
+                //When dash is finished, reset the values
                 movementDir = Vector2.zero;
-                dashTime = startDashTime;
+                dashTime = dashDuration;
                 IsDashing = false;
             }
         }
@@ -76,11 +75,11 @@ public class DashMoveTopdown : MonoBehaviour
                 
                 if(moveScript.Movement.magnitude >= sensibility)
                 {
-                    movementDir = moveScript.Movement * dashSpeed;
+                    movementDir = moveScript.Movement * dashSpeed; //Sets the movement vector
                 }
                 else
                 {
-                    movementDir = Constants.DEFAULT_DASH_DIRECTION * dashSpeed;
+                    movementDir = Constants.DEFAULT_DASH_DIRECTION * dashSpeed; //If the player is not moving => Dash in the default direction
                 }
             }
         }
@@ -90,12 +89,12 @@ public class DashMoveTopdown : MonoBehaviour
     {
         if(IsDashing)
         {
-            rb.velocity = movementDir;
+            rb.velocity = movementDir; //Apply movement
         }
     }
 
     private bool CanDash()
     {
-        return !playerInteract.IsInteracting;
+        return !playerInteract.IsInteracting; //Check if player can dash
     }
 }
